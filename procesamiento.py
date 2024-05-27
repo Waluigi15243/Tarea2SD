@@ -4,7 +4,26 @@ from kafka import KafkaProducer
 from kafka import KafkaConsumer
 
 topic = "detalle_compra"
-topicOrderArrived = "compra_recibida"
-topicOrderProcessing = "procesando_compra"
-topicOrderDelivery = "entregando_compra"
-topicOrderConfirmed = "compra_confirmada"
+topicNotif = "compra_confirmada"
+
+consumer = KafkaConsumer(topic, bootstrap_servers="localhost:9092")
+
+while True:
+    for message in consumer:
+        consumed_order = json.loads(message.value.decode())
+        print(consumed_order)
+        orderid = consumed_order["orderid"]
+        gameid = consumed_order["gameid"]
+        price = consumed_order["price"]
+        name = consumed_order["name"]
+        usermail = consumed_order["usermail"]
+        data = {
+            "orderid": orderid,
+            "gameid": gameid,
+            "nombre": name,
+            "price": price,
+            "usermail": f"{userid}@correo.com",
+            "estado": "recibido",
+        }
+        print("Transaccion recibida!")
+        producer.send(topicNotif, json.dumps(data).encode("utf-8"))
