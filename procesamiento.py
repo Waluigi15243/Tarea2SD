@@ -8,6 +8,7 @@ topicNotif = "compra_confirmada"
 
 consumer = KafkaConsumer(topic, bootstrap_servers="localhost:9092")
 
+print("Buscando transacciones...")
 while True:
     for message in consumer:
         consumed_order = json.loads(message.value.decode())
