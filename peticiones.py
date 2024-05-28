@@ -11,7 +11,7 @@ producer = KafkaProducer(bootstrap_servers="localhost:29092")
 
 with open("steamgames.csv") as archivo:
     data = csv.reader(archivo)
-    for _ in range(4):
+    for _ in range(10):
         next(data)
     row = next(data)
     number = randrange(2000)
