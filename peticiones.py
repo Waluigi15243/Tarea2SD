@@ -5,9 +5,9 @@ from random import randrange
 from kafka import KafkaProducer
 import csv
 
-topic = "detalle_compra"
+topic = "compra_detalles"
 
-producer = KafkaProducer(bootstrap_servers="localhost:9092")
+producer = KafkaProducer(bootstrap_servers="localhost:29092")
 
 with open("steamgames.csv") as archivo:
     data = csv.reader(archivo)
@@ -24,3 +24,4 @@ with open("steamgames.csv") as archivo:
     }
     print(order)
     producer.send(topic, json.dumps(order).encode("utf-8"))
+    print("Transaccion enviada!")
