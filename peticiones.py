@@ -13,6 +13,7 @@ producer = KafkaProducer(bootstrap_servers="localhost:29092")
 @app.route('/', methods=['POST'])
 def sendOrder():
     with open("steamgames.csv") as archivo:
+        global transaction
         i = int(request.form['value'])
         data = csv.reader(archivo)
         for _ in range(i):
