@@ -28,9 +28,9 @@ def sendOrder():
             "price": row[2],
             "usermail": f"{number}@correo.com",
         }
-        print(order + "\n")
+        print(order)
         producer.send(topic, json.dumps(order).encode("utf-8"))
-        print("Transaccion enviada!")
+        print("Transaccion enviada! \n")
         return "Transaccion enviada!"
 
 if __name__ == '__main__':
