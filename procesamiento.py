@@ -12,9 +12,9 @@ consumer = KafkaConsumer(topic, bootstrap_servers="localhost:29092", auto_offset
 producer = KafkaProducer(bootstrap_servers="localhost:29092")
 
 while True:
-    print("Buscando transacciones...")
+    print("Buscando transacciones... \n")
     for message in consumer:
-        print("Recibiendo transaccion...")
+        print("Recibiendo transaccion... \n")
         time.sleep(3)
         consumed_order = json.loads(message.value.decode('utf-8'))
         orderid = consumed_order["orderid"]
