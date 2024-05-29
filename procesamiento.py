@@ -16,7 +16,6 @@ while True:
     for message in consumer:
         print("Recibiendo transaccion...")
         consumed_order = json.loads(message.value.decode('utf-8'))
-        print(consumed_order)
         orderid = consumed_order["orderid"]
         gameid = consumed_order["gameid"]
         price = consumed_order["price"]
