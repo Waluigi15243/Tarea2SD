@@ -15,6 +15,7 @@ while True:
     print("Buscando transacciones...")
     for message in consumer:
         print("Recibiendo transaccion...")
+        time.sleep(3)
         consumed_order = json.loads(message.value.decode('utf-8'))
         orderid = consumed_order["orderid"]
         gameid = consumed_order["gameid"]
@@ -32,19 +33,19 @@ while True:
         producer.send(topicNotif, json.dumps(data).encode("utf-8"))
         print(data)
         print("Transaccion recibida! \n")
-        time.sleep(3)
+        time.sleep(7)
         data["estado"] = "preparando"
         producer.send(topicNotif, json.dumps(data).encode("utf-8"))
         print(data)
         print("Preparando transaccion... \n")
-        time.sleep(3)
+        time.sleep(7)
         data["estado"] = "entregando"
         producer.send(topicNotif, json.dumps(data).encode("utf-8"))
         print(data)
         print("Entregando transaccion... \n")
-        time.sleep(3)
+        time.sleep(7)
         data["estado"] = "finalizado"
         producer.send(topicNotif, json.dumps(data).encode("utf-8"))
         print(data)
         print("Transaccion finalizada! \n")
-        time.sleep(3)
+        time.sleep(7)
