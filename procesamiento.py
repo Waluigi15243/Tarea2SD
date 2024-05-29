@@ -8,7 +8,7 @@ from kafka import KafkaConsumer
 topic = "compra_detalles"
 topicNotif = "compra_confirmada"
 
-consumer = KafkaConsumer(topic, bootstrap_servers="localhost:29092", auto_offset_reset='earliest', enable_auto_commit=True, auto_commit_interval_ms=1000)
+consumer = KafkaConsumer(topic, bootstrap_servers="localhost:29092", auto_offset_reset='earliest', enable_auto_commit=True, auto_commit_interval_ms=1000, group_id='newGroup')
 producer = KafkaProducer(bootstrap_servers="localhost:29092")
 
 while True:
