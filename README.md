@@ -3,4 +3,4 @@
 
 2. Para levantar el contenedor, se utiliza "docker compose up -d"
 
-3. Para enviar peticiones HTTP al codigo peticiones.py, utilice el comando "curl -X POST -d value[algún número] localhost:3000/"
+3. Para enviar peticiones HTTP al codigo peticiones.py, utilice el comando "curl -X POST -d value=[algún número] localhost:3000/"
