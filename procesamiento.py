@@ -14,8 +14,6 @@ producer = KafkaProducer(bootstrap_servers="localhost:29092")
 while True:
     print("Buscando transacciones... \n")
     for message in consumer:
-        print("Recibiendo transaccion... \n")
-        time.sleep(3)
         consumed_order = json.loads(message.value.decode('utf-8'))
         orderid = consumed_order["orderid"]
         gameid = consumed_order["gameid"]
@@ -31,21 +29,17 @@ while True:
             "estado": "recibido",
         }
         producer.send(topicNotif, json.dumps(data).encode("utf-8"))
-        print(data)
         print("Transaccion recibida! \n")
-        time.sleep(7)
+        time.sleep(3)
         data["estado"] = "preparando"
         producer.send(topicNotif, json.dumps(data).encode("utf-8"))
-        print(data)
         print("Preparando transaccion... \n")
-        time.sleep(7)
+        time.sleep(3)
         data["estado"] = "entregando"
         producer.send(topicNotif, json.dumps(data).encode("utf-8"))
-        print(data)
         print("Entregando transaccion... \n")
-        time.sleep(7)
+        time.sleep(3)
         data["estado"] = "finalizado"
         producer.send(topicNotif, json.dumps(data).encode("utf-8"))
-        print(data)
         print("Transaccion finalizada! \n")
-        time.sleep(7)
+        time.sleep(3)
