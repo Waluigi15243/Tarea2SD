@@ -31,17 +31,21 @@ while True:
             "estado": "recibido",
         }
         producer.send(topicNotif, json.dumps(data).encode("utf-8"))
-        print("Transaccion recibida!")
+        print(data)
+        print("Transaccion recibida! \n")
         time.sleep(3)
         data["estado"] = "preparando"
         producer.send(topicNotif, json.dumps(data).encode("utf-8"))
-        print("Preparando transaccion...")
+        print(data)
+        print("Preparando transaccion... \n")
         time.sleep(3)
         data["estado"] = "entregando"
         producer.send(topicNotif, json.dumps(data).encode("utf-8"))
-        print("Entregando transaccion...")
+        print(data)
+        print("Entregando transaccion... \n")
         time.sleep(3)
         data["estado"] = "finalizado"
         producer.send(topicNotif, json.dumps(data).encode("utf-8"))
-        print("Transaccion finalizada!")
+        print(data)
+        print("Transaccion finalizada! \n")
         time.sleep(3)
