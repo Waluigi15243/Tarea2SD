@@ -13,12 +13,8 @@ def mail():
     for message in consumer:
       global diccionarios
       order = json.loads(message.value.decode('utf-8'))
-      orderid = order["orderid"]
-      gameid = order["gameid"]
-      name = order["name"]
-      price = order["price"]
-      usermail = order["usermail"]
-      estado = order ["estado"]
+      if order["estado"] == "recibido":
+        diccionarios.append(order)
     
 @app.route('/')
 def index():
