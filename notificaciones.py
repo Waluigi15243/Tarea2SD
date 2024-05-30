@@ -20,10 +20,10 @@ def createMail(subject, body, fromAddress, toAddress):
   message.attach(MIMEText(body, 'plain'))
   return message
 
-def sendMail(emailMsg, ):
+def sendMail(emailMsg, fromAddress):
   server = smtplib.SMTP("smtp.gmail.com", 587)
   server.starttls()
-  server.login("", "")
+  server.login(fromAddress, "")
   server.send_message(emailMsg)
   server.quit()
 
@@ -42,20 +42,20 @@ def mail():
         diccionarios.append(order)
         body = f"Estimado Usuario: \n Le enviamos este correo para informarle a usted que se ha recibido una transaccion en la cual se senala que usted ha comprado {name} a un costo de {price}. \n Para mas informacion, actualice el historial de su correo para verificar el estado de su transaccion"
         emailMsg = createMail(subject, body, fromAddress, toAddress)
-        sendMail(emailMsg)
+        sendMail(emailMsg, fromAddress)
       elif order["estado"] == "preparando":
         diccionarios[-1]["estado"] = order["estado"]
         body = f"Estimado Usuario: \n Le enviamos este correo para informarle a usted que su transaccion se encuentra en proceso de preparacion. Recuerde que su compra corresponde a {name}, y su costo fue de {price}. \n Para mas informacion, actualice el historial de su correo para verificar el estado de su transaccion"
         emailMsg = createMail(subject, body, fromAddress, toAddress)
-        sendMail(emailMsg)
+        sendMail(emailMsg, fromAddress)
       elif order["estado"] == "entregando":
         diccionarios[-1]["estado"] = order["estado"]
         emailMsg = createMail(subject, body, fromAddress, toAddress)
-        sendMail(emailMsg)
+        sendMail(emailMsg, fromAddress)
       elif order["estado"] == "finalizado":
         diccionarios[-1]["estado"] = order["estado"]
         emailMsg = createMail(subject, body, fromAddress, toAddress)
-        sendMail(emailMsg)
+        sendMail(emailMsg, fromAddress)
 
 
 @app.route('/')
