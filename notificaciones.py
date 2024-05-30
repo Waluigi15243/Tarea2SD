@@ -50,10 +50,12 @@ def mail():
         sendMail(emailMsg, fromAddress)
       elif order["estado"] == "entregando":
         diccionarios[-1]["estado"] = order["estado"]
+        body = f"Estimado Usuario: \n Le enviamos este correo para informarle a usted que su transaccion acaba de prepararse y se encuentra en el proceso de entregado. Recuerde que su compra corresponde a {name}, y su costo fue de {price}. \n Para mas informacion, actualice el historial de su correo para verificar el estado de su transaccion"
         emailMsg = createMail(subject, body, fromAddress, toAddress)
         sendMail(emailMsg, fromAddress)
       elif order["estado"] == "finalizado":
         diccionarios[-1]["estado"] = order["estado"]
+        body = f"Estimado Usuario: \n Le enviamos este correo para informarle a usted que su transaccion ha finalizado, y ahora usted tiene el videojuego {name} en su posicion. \n Ojala el servicio haya sido de su agrado, no dude en realizar otro pedido!"
         emailMsg = createMail(subject, body, fromAddress, toAddress)
         sendMail(emailMsg, fromAddress)
 
