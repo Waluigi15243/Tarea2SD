@@ -2,6 +2,8 @@ import json
 from flask import Flask
 from kafka import KafkaConsumer
 from threading import Thread
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 
 app = Flask(__name__)
 topicNotif = "compra_confirmada"
