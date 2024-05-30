@@ -23,7 +23,7 @@ while True:
         data = {
             "orderid": orderid,
             "gameid": gameid,
-            "nombre": name,
+            "name": name,
             "price": price,
             "usermail": usermail,
             "estado": "recibido",
