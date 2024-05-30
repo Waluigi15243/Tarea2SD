@@ -64,7 +64,6 @@ def mail():
 
 @app.route('/')
 def index():
-  global diccionarios
   with diccionariosLock:
     i = int(request.args.get('value'))
     peticion = diccionarios[i-1]['estado']
