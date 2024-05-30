@@ -35,7 +35,7 @@ def mail():
       name = order["name"]
       usermail = order["usermail"]
       price = order["price"]
-      fromAddress = ""
+      fromAddress = "fagrimmicica-5245@yopmail.com"
       toAddress = order["usermail"]
       subject = "Estado de la Transaccion"
       if order["estado"] == "recibido":
