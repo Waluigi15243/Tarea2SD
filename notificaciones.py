@@ -1,6 +1,6 @@
 import json
 import smtplib
-from flask import Flask
+from flask import Flask, request
 from kafka import KafkaConsumer
 from threading import Thread, Lock
 from email.mime.multipart import MIMEMultipart
