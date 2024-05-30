@@ -24,7 +24,7 @@ def sendOrder():
             "gameid": row[0],
             "name": row[1],
             "price": row[2],
-            "usermail": "xeulleimmannussau-1708@yopmail.com",
+            "usermail": "",
         }
         print(order)
         producer.send(topic, json.dumps(order).encode("utf-8"))
