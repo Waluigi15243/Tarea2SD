@@ -2,13 +2,14 @@ import json
 import smtplib
 from flask import Flask
 from kafka import KafkaConsumer
-from threading import Thread
+from threading import Thread, Lock
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
 app = Flask(__name__)
 topicNotif = "compra_confirmada"
 diccionarios = []
+diccionariosLock = Lock()
 
 consumer = KafkaConsumer(topicNotif, bootstrap_servers="localhost:29092", auto_offset_reset='earliest', enable_auto_commit=True, auto_commit_interval_ms=1000, group_id='newGroup')
 
@@ -38,33 +39,35 @@ def mail():
       fromAddress = ""
       toAddress = order["usermail"]
       subject = "Estado de la Transaccion"
-      if order["estado"] == "recibido":
-        diccionarios.append(order)
-        body = f"Estimado Usuario: \n Le enviamos este correo para informarle a usted que se ha recibido una transaccion en la cual se senala que usted ha comprado {name} a un costo de {price}. \n Para mas informacion, actualice el historial de su correo para verificar el estado de su transaccion"
-        emailMsg = createMail(subject, body, fromAddress, toAddress)
-        sendMail(emailMsg, fromAddress)
-      elif order["estado"] == "preparando":
-        diccionarios[-1]["estado"] = order["estado"]
-        body = f"Estimado Usuario: \n Le enviamos este correo para informarle a usted que su transaccion se encuentra en proceso de preparacion. Recuerde que su compra corresponde a {name}, y su costo fue de {price}. \n Para mas informacion, actualice el historial de su correo para verificar el estado de su transaccion"
-        emailMsg = createMail(subject, body, fromAddress, toAddress)
-        sendMail(emailMsg, fromAddress)
-      elif order["estado"] == "entregando":
-        diccionarios[-1]["estado"] = order["estado"]
-        body = f"Estimado Usuario: \n Le enviamos este correo para informarle a usted que su transaccion acaba de prepararse y se encuentra en el proceso de entregado. Recuerde que su compra corresponde a {name}, y su costo fue de {price}. \n Para mas informacion, actualice el historial de su correo para verificar el estado de su transaccion"
-        emailMsg = createMail(subject, body, fromAddress, toAddress)
-        sendMail(emailMsg, fromAddress)
-      elif order["estado"] == "finalizado":
-        diccionarios[-1]["estado"] = order["estado"]
-        body = f"Estimado Usuario: \n Le enviamos este correo para informarle a usted que su transaccion ha finalizado, y ahora usted tiene el videojuego {name} en su posicion. \n Ojala el servicio haya sido de su agrado, no dude en realizar otro pedido!"
-        emailMsg = createMail(subject, body, fromAddress, toAddress)
-        sendMail(emailMsg, fromAddress)
+      with diccionariosLock:
+        if order["estado"] == "recibido":
+          diccionarios.append(order)
+          body = f"Estimado Usuario: \n Le enviamos este correo para informarle a usted que se ha recibido una transaccion en la cual se senala que usted ha comprado {name} a un costo de {price}. \n Para mas informacion, actualice el historial de su correo para verificar el estado de su transaccion"
+          emailMsg = createMail(subject, body, fromAddress, toAddress)
+          sendMail(emailMsg, fromAddress)
+        elif order["estado"] == "preparando":
+          diccionarios[-1]["estado"] = order["estado"]
+          body = f"Estimado Usuario: \n Le enviamos este correo para informarle a usted que su transaccion se encuentra en proceso de preparacion. Recuerde que su compra corresponde a {name}, y su costo fue de {price}. \n Para mas informacion, actualice el historial de su correo para verificar el estado de su transaccion"
+          emailMsg = createMail(subject, body, fromAddress, toAddress)
+          sendMail(emailMsg, fromAddress)
+        elif order["estado"] == "entregando":
+          diccionarios[-1]["estado"] = order["estado"]
+          body = f"Estimado Usuario: \n Le enviamos este correo para informarle a usted que su transaccion acaba de prepararse y se encuentra en el proceso de entregado. Recuerde que su compra corresponde a {name}, y su costo fue de {price}. \n Para mas informacion, actualice el historial de su correo para verificar el estado de su transaccion"
+          emailMsg = createMail(subject, body, fromAddress, toAddress)
+          sendMail(emailMsg, fromAddress)
+        elif order["estado"] == "finalizado":
+          diccionarios[-1]["estado"] = order["estado"]
+          body = f"Estimado Usuario: \n Le enviamos este correo para informarle a usted que su transaccion ha finalizado, y ahora usted tiene el videojuego {name} en su posicion. \n Ojala el servicio haya sido de su agrado, no dude en realizar otro pedido!"
+          emailMsg = createMail(subject, body, fromAddress, toAddress)
+          sendMail(emailMsg, fromAddress)
 
 
 @app.route('/')
 def index():
   global diccionarios
-  i = int(request.args.get('value'))
-  peticion = diccionarios[i-1]['estado']
+  with diccionariosLock:
+    i = int(request.args.get('value'))
+    peticion = diccionarios[i-1]['estado']
   return f"El estado actual de la transaccion es el siguiente: {peticion}"
 
 if __name__ == '__main__':
