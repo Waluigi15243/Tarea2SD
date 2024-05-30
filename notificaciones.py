@@ -67,7 +67,7 @@ def index():
   with diccionariosLock:
     i = int(request.args.get('value'))
     peticion = diccionarios[i-1]['estado']
-  return f"El estado actual de la transaccion es el siguiente: {peticion}"
+  return f"El estado actual de la transaccion es el siguiente: {peticion} \n"
 
 if __name__ == '__main__':
   threads = Thread(target=mail)
