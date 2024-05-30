@@ -1,6 +1,5 @@
 import json
 import time
-from random import randrange
 from flask import Flask, request
 from kafka import KafkaProducer
 import csv
@@ -19,14 +18,13 @@ def sendOrder():
         for _ in range(i):
             next(data)
         row = next(data)
-        number = randrange(2000)
         transaction += 1
         order = {
             "orderid": transaction,
             "gameid": row[0],
             "name": row[1],
             "price": row[2],
-            "usermail": f"{number}@correo.com",
+            "usermail": "",
         }
         print(order)
         producer.send(topic, json.dumps(order).encode("utf-8"))
