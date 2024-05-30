@@ -23,7 +23,7 @@ def createMail(subject, body, fromAddress, toAddress):
 def sendMail(emailMsg, fromAddress):
   server = smtplib.SMTP("smtp.gmail.com", 587)
   server.starttls()
-  server.login(fromAddress, "3hpg6kp8xpsycxuvhrlaz3sbqrhxrn")
+  server.login(fromAddress, "")
   server.send_message(emailMsg)
   server.quit()
 
@@ -35,7 +35,7 @@ def mail():
       name = order["name"]
       usermail = order["usermail"]
       price = order["price"]
-      fromAddress = "cs0phcnz4abznh6@tempmail.us.com"
+      fromAddress = ""
       toAddress = order["usermail"]
       subject = "Estado de la Transaccion"
       if order["estado"] == "recibido":
