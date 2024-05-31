@@ -65,10 +65,13 @@ def mail():
 @app.route('/')
 def index():
   global diccionarios
+  i = int(request.args.get('value'))
   with diccionariosLock:
-    i = int(request.args.get('value'))
-    transaction = diccionarios[i-1]
-  return transaction
+    for transaction in diccionarios:
+      print(transaction["orderid"])
+      if transaction["orderid"] == i:
+        return transaction
+  return "ERROR: No existe ninguna transaccion con ese numero ID"
 
 if __name__ == '__main__':
   threads = Thread(target=mail)
