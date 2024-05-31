@@ -68,7 +68,6 @@ def index():
   i = int(request.args.get('value'))
   with diccionariosLock:
     for transaction in diccionarios:
-      print(transaction["orderid"])
       if transaction["orderid"] == i:
         return transaction
   return "ERROR: No existe ninguna transaccion con ese numero ID"
