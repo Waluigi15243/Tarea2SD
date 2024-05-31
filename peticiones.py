@@ -29,7 +29,7 @@ def sendOrder():
         print(order)
         producer.send(topic, json.dumps(order).encode("utf-8"))
         print("Transaccion enviada! \n")
-        return "Transaccion enviada!"
+        return "Transaccion enviada! \n"
 
 if __name__ == '__main__':
     app.run(debug=True, port=3000)
