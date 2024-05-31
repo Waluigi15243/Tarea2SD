@@ -24,7 +24,7 @@ def createMail(subject, body, fromAddress, toAddress):
 def sendMail(emailMsg, fromAddress):
   server = smtplib.SMTP("smtp.gmail.com", 587)
   server.starttls()
-  server.login(fromAddress, "qmlf ocfg zipd hlmw")
+  server.login(fromAddress, "hjiy nkhv nqcx rixx")
   server.send_message(emailMsg)
   server.quit()
 
