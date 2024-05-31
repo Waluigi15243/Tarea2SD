@@ -42,17 +42,17 @@ def mail():
       with diccionariosLock:
         if order["estado"] == "recibido":
           diccionarios.append(order)
-          body = f"Estimado Usuario: \n Le enviamos este correo para informarle a usted que se ha recibido una transaccion en la cual se senala que usted ha comprado {name} a un costo de {price}. \n Para mas informacion, actualice el historial de su correo para verificar el estado de su transaccion"
+          body = f"Estimado Usuario: \n Le enviamos este correo para informarle a usted que se ha recibido una transaccion en la cual se senala que usted ha comprado {name} a un costo de ${price}. \n Para mas informacion, actualice el historial de su correo para verificar el estado de su transaccion"
           emailMsg = createMail(subject, body, fromAddress, toAddress)
           sendMail(emailMsg, fromAddress)
         elif order["estado"] == "preparando":
           diccionarios[-1]["estado"] = order["estado"]
-          body = f"Estimado Usuario: \n Le enviamos este correo para informarle a usted que su transaccion se encuentra en proceso de preparacion. Recuerde que su compra corresponde a {name}, y su costo fue de {price}. \n Para mas informacion, actualice el historial de su correo para verificar el estado de su transaccion"
+          body = f"Estimado Usuario: \n Le enviamos este correo para informarle a usted que su transaccion se encuentra en proceso de preparacion. Recuerde que su compra corresponde a {name}, y su costo fue de ${price}. \n Para mas informacion, actualice el historial de su correo para verificar el estado de su transaccion"
           emailMsg = createMail(subject, body, fromAddress, toAddress)
           sendMail(emailMsg, fromAddress)
         elif order["estado"] == "entregando":
           diccionarios[-1]["estado"] = order["estado"]
-          body = f"Estimado Usuario: \n Le enviamos este correo para informarle a usted que su transaccion acaba de prepararse y se encuentra en el proceso de entregado. Recuerde que su compra corresponde a {name}, y su costo fue de {price}. \n Para mas informacion, actualice el historial de su correo para verificar el estado de su transaccion"
+          body = f"Estimado Usuario: \n Le enviamos este correo para informarle a usted que su transaccion acaba de prepararse y se encuentra en el proceso de entregado. Recuerde que su compra corresponde a {name}, y su costo fue de ${price}. \n Para mas informacion, actualice el historial de su correo para verificar el estado de su transaccion"
           emailMsg = createMail(subject, body, fromAddress, toAddress)
           sendMail(emailMsg, fromAddress)
         elif order["estado"] == "finalizado":
