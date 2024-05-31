@@ -24,7 +24,7 @@ def createMail(subject, body, fromAddress, toAddress):
 def sendMail(emailMsg, fromAddress):
   server = smtplib.SMTP("smtp.gmail.com", 587)
   server.starttls()
-  server.login(fromAddress, "")
+  server.login(fromAddress, "qmlf ocfg zipd hlmw")
   server.send_message(emailMsg)
   server.quit()
 
@@ -36,7 +36,7 @@ def mail():
       name = order["name"]
       usermail = order["usermail"]
       price = order["price"]
-      fromAddress = ""
+      fromAddress = "tempamogus.homework@gmail.com"
       toAddress = order["usermail"]
       subject = "Estado de la Transaccion"
       with diccionariosLock:
