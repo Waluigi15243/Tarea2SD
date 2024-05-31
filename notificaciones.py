@@ -65,6 +65,7 @@ def mail():
 @app.route('/')
 def index():
   with diccionariosLock:
+    global diccionarios
     i = int(request.args.get('value'))
     transaction = diccionarios[i-1]
   return transaction
