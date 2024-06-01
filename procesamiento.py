@@ -29,13 +29,13 @@ while True:
             "estado": "recibido",
         }
         producer.send(topicNotif, json.dumps(data).encode("utf-8"))
-        time.sleep(8)
+        time.sleep(3)
         data["estado"] = "preparando"
         producer.send(topicNotif, json.dumps(data).encode("utf-8"))
-        time.sleep(8)
+        time.sleep(3)
         data["estado"] = "entregando"
         producer.send(topicNotif, json.dumps(data).encode("utf-8"))
-        time.sleep(8)
+        time.sleep(3)
         data["estado"] = "finalizado"
         producer.send(topicNotif, json.dumps(data).encode("utf-8"))
-        time.sleep(8)
+        time.sleep(3)
